@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Teacher;
+use Illuminate\Validation\Rule;
 
 class TeacherController extends Controller
 {
@@ -30,6 +31,12 @@ class TeacherController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate([
+            'name'=> 'required|string|max:100',
+            'email' => 'required|string|max:100',
+            'password' => 'required|string|max:20'
+        ]);
+
         $input = $request->all();
         Teacher::create($input);
         return redirect('teacher')->with('flash_message', 'Teacher Addedd!');
